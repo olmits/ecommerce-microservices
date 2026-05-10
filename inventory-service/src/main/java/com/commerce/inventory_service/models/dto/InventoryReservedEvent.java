@@ -1,4 +1,6 @@
 package com.commerce.inventory_service.models.dto;
 
-public record InventoryReservedEvent(Long orderId, String status) {
+import java.math.BigDecimal;
+
+public record InventoryReservedEvent(Long orderId, BigDecimal totalAmount, String status) {
 }

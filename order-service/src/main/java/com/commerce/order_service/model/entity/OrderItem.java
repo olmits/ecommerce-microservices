@@ -18,7 +18,6 @@ public class OrderItem {
 
     private Long productId;
     private Integer quantity;
-    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

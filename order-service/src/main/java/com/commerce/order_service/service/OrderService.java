@@ -29,17 +29,12 @@ public class OrderService {
             OrderItem item = new OrderItem();
             item.setProductId(itemReq.productId());
             item.setQuantity(itemReq.quantity());
-            item.setPrice(itemReq.price());
             item.setOrder(order); // Link back to parent
             return item;
         }).toList();
 
         order.setItems(orderItems);
 
-        BigDecimal total = orderItems.stream()
-                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        order.setTotalAmount(total);
         //        Save to PostgreSQL
         Order savedOrder = orderRepository.save(order);
 
@@ -48,7 +43,7 @@ public class OrderService {
                 .map(item -> new OrderCreatedEvent.OrderItemDto(item.getProductId(), item.getQuantity()))
                 .toList();
 
-        OrderCreatedEvent event = new OrderCreatedEvent(savedOrder.getId(), savedOrder.getTotalAmount(), eventItems);
+        OrderCreatedEvent event = new OrderCreatedEvent(savedOrder.getId(), eventItems);
 
         //        Publish to RMQ
         rabbitTemplate.convertAndSend(RabbitMqConfig.EXCHANGE_NAME, RabbitMqConfig.ROUTING_KEY, event);

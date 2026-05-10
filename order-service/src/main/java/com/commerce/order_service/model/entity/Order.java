@@ -16,8 +16,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal totalAmount;
-
     //    PENDING, COMPLETED, or CANCELLED
     private String status;
 
