@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: order-service
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    # default username/password is guest/guest
+  
+  datasource:
+    # Connect to the default 'postgres' database
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: admin
+    password: password
+
+  jpa:
+    # Tell Hibernate to automatically create tables
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        # Create a specific schema for this microservice
+        default_schema: order_schema
+        hbm2ddl.create_namespaces: true
+    # Show SQL in the console so you can see it working
+    show-sql: true
