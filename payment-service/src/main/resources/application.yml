@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: payment-service
@@ -5,18 +8,24 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    # default username/password is guest/guest
 
   datasource:
-    # Connect to the default 'postgres' database
     url: jdbc:postgresql://localhost:5432/postgres
     username: admin
     password: password
 
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: admin
+    password: password
+    schemas: payment_schema
+    create-schemas: true
+    locations: classpath:db/migration
+
   jpa:
-    # Tell Hibernate to automatically create tables
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         # Create a specific schema for this microservice
